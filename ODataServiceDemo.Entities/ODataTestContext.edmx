@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ODataTestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ODataTestModelStoreContainer">
+          <EntitySet Name="tblsite" EntityType="ODataTestModel.Store.tblsite" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbluaresult" EntityType="ODataTestModel.Store.tbluaresult" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbluaresultdetail" EntityType="ODataTestModel.Store.tbluaresultdetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tbluser" EntityType="ODataTestModel.Store.tbluser" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_tbluaresultdetail_tbluaresult" Association="ODataTestModel.Store.FK_tbluaresultdetail_tbluaresult">
+            <End Role="tbluaresult" EntitySet="tbluaresult" />
+            <End Role="tbluaresultdetail" EntitySet="tbluaresultdetail" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblsite">
+          <Key>
+            <PropertyRef Name="sID" />
+          </Key>
+          <Property Name="sID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="sName" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="sDB" Type="varchar" Nullable="false" MaxLength="150" />
+          <Property Name="sLetter" Type="varchar" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tbluaresult">
+          <Key>
+            <PropertyRef Name="uarID" />
+          </Key>
+          <Property Name="uarID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="uarLngCltID" Type="int" Nullable="false" />
+          <Property Name="uarSchedID" Type="int" Nullable="false" />
+          <Property Name="uarDropDt" Type="datetime" Nullable="false" />
+          <Property Name="uarResultDt" Type="datetime" Nullable="false" />
+          <Property Name="uarCreatedBy" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="uarCreatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbluaresultdetail">
+          <Key>
+            <PropertyRef Name="uardID" />
+          </Key>
+          <Property Name="uardID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="uardRecID" Type="int" Nullable="false" />
+          <Property Name="uardResult" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="uardRX" Type="bit" Nullable="false" />
+          <Property Name="uaDetail" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbluser">
+          <Key>
+            <PropertyRef Name="Uskey" />
+          </Key>
+          <Property Name="Uskey" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="usrName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="usrFName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="usrLName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="usrACTIVE" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbluaresultdetail_tbluaresult">
+          <End Role="tbluaresult" Type="ODataTestModel.Store.tbluaresult" Multiplicity="1" />
+          <End Role="tbluaresultdetail" Type="ODataTestModel.Store.tbluaresultdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbluaresult">
+              <PropertyRef Name="uarID" />
+            </Principal>
+            <Dependent Role="tbluaresultdetail">
+              <PropertyRef Name="uardRecID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ODataTestModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ODataTestEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="tblsites" EntityType="ODataTestModel.tblsite" />
+          <EntitySet Name="tbluaresults" EntityType="ODataTestModel.tbluaresult" />
+          <EntitySet Name="tbluaresultdetails" EntityType="ODataTestModel.tbluaresultdetail" />
+          <EntitySet Name="tblusers" EntityType="ODataTestModel.tbluser" />
+          <AssociationSet Name="FK_tbluaresultdetail_tbluaresult" Association="ODataTestModel.FK_tbluaresultdetail_tbluaresult">
+            <End Role="tbluaresult" EntitySet="tbluaresults" />
+            <End Role="tbluaresultdetail" EntitySet="tbluaresultdetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblsite">
+          <Key>
+            <PropertyRef Name="sID" />
+          </Key>
+          <Property Name="sID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="sName" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="sDB" Type="String" Nullable="false" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="sLetter" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbluaresult">
+          <Key>
+            <PropertyRef Name="uarID" />
+          </Key>
+          <Property Name="uarID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="uarLngCltID" Type="Int32" Nullable="false" />
+          <Property Name="uarSchedID" Type="Int32" Nullable="false" />
+          <Property Name="uarDropDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="uarResultDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="uarCreatedBy" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="uarCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbluaresultdetails" Relationship="ODataTestModel.FK_tbluaresultdetail_tbluaresult" FromRole="tbluaresult" ToRole="tbluaresultdetail" />
+        </EntityType>
+        <EntityType Name="tbluaresultdetail">
+          <Key>
+            <PropertyRef Name="uardID" />
+          </Key>
+          <Property Name="uardID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="uardRecID" Type="Int32" Nullable="false" />
+          <Property Name="uardResult" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="uardRX" Type="Boolean" Nullable="false" />
+          <Property Name="uaDetail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="tbluaresult" Relationship="ODataTestModel.FK_tbluaresultdetail_tbluaresult" FromRole="tbluaresultdetail" ToRole="tbluaresult" />
+        </EntityType>
+        <EntityType Name="tbluser">
+          <Key>
+            <PropertyRef Name="Uskey" />
+          </Key>
+          <Property Name="Uskey" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="usrName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="usrFName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="usrLName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="usrACTIVE" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbluaresultdetail_tbluaresult">
+          <End Role="tbluaresult" Type="ODataTestModel.tbluaresult" Multiplicity="1" />
+          <End Role="tbluaresultdetail" Type="ODataTestModel.tbluaresultdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbluaresult">
+              <PropertyRef Name="uarID" />
+            </Principal>
+            <Dependent Role="tbluaresultdetail">
+              <PropertyRef Name="uardRecID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ODataTestModelStoreContainer" CdmEntityContainer="ODataTestEntities">
+          <EntitySetMapping Name="tblsites">
+            <EntityTypeMapping TypeName="ODataTestModel.tblsite">
+              <MappingFragment StoreEntitySet="tblsite">
+                <ScalarProperty Name="sID" ColumnName="sID" />
+                <ScalarProperty Name="sName" ColumnName="sName" />
+                <ScalarProperty Name="sDB" ColumnName="sDB" />
+                <ScalarProperty Name="sLetter" ColumnName="sLetter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbluaresults">
+            <EntityTypeMapping TypeName="ODataTestModel.tbluaresult">
+              <MappingFragment StoreEntitySet="tbluaresult">
+                <ScalarProperty Name="uarID" ColumnName="uarID" />
+                <ScalarProperty Name="uarLngCltID" ColumnName="uarLngCltID" />
+                <ScalarProperty Name="uarSchedID" ColumnName="uarSchedID" />
+                <ScalarProperty Name="uarDropDt" ColumnName="uarDropDt" />
+                <ScalarProperty Name="uarResultDt" ColumnName="uarResultDt" />
+                <ScalarProperty Name="uarCreatedBy" ColumnName="uarCreatedBy" />
+                <ScalarProperty Name="uarCreatedDt" ColumnName="uarCreatedDt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbluaresultdetails">
+            <EntityTypeMapping TypeName="ODataTestModel.tbluaresultdetail">
+              <MappingFragment StoreEntitySet="tbluaresultdetail">
+                <ScalarProperty Name="uardID" ColumnName="uardID" />
+                <ScalarProperty Name="uardRecID" ColumnName="uardRecID" />
+                <ScalarProperty Name="uardResult" ColumnName="uardResult" />
+                <ScalarProperty Name="uardRX" ColumnName="uardRX" />
+                <ScalarProperty Name="uaDetail" ColumnName="uaDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblusers">
+            <EntityTypeMapping TypeName="ODataTestModel.tbluser">
+              <MappingFragment StoreEntitySet="tbluser">
+                <ScalarProperty Name="Uskey" ColumnName="Uskey" />
+                <ScalarProperty Name="usrName" ColumnName="usrName" />
+                <ScalarProperty Name="usrFName" ColumnName="usrFName" />
+                <ScalarProperty Name="usrLName" ColumnName="usrLName" />
+                <ScalarProperty Name="usrACTIVE" ColumnName="usrACTIVE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

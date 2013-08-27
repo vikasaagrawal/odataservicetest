@@ -1,0 +1,125 @@
+21081321I
+
+Create a web service that will allow the transfer of several different data points when requested of the web service. Don't care about what it's written in but the SQL is 2008. I need the web service and sample data requests for each area. DB is attached with no Data. Winning Bidder will receive with data. This will run over a private Intranet.
+
+USERS
+Table: tbluser
+Parameters:None
+Desc: Return whole table every time
+Returns:
+Field Type
+Uskey Int
+usrName varchar(50)
+usrFName varchar(50)
+usrLName varchar(50)
+usrACTIVE Bit
+
+SITE
+object: tblsite
+Parameters: None
+Desc: Return whole table every time
+Returns:
+sID int
+sName varchar(200)
+sDB varchar(150)
+sLetter varchar(1)
+
+
+
+
+
+
+CLIENTS
+Objects: tblclient, tblenroll, tblpayerclt
+Parameters: Program varchar(50), cltid int, StartDT date, EndDt Date
+Desc: Create Stored Procedure to handle data request of above parameters. Return any client with the below information that was active in the passed program at any point during the start and end dates if cltid is null, otherwise allow null dates if client is specified and simply return that one client. The join to tblpayer will be on pytype = 'primary' and pyactive = 1
+
+cltid int
+program varchar(50)
+cltm4id varchar(50)
+cltlname varchar(50)
+cltfname varchar(50)
+cltdob varchar(50)
+cltgender varchar(50)
+cltaddress varchar(50)
+cltcity varchar(50)
+cltstate varchar(50)
+cltzip varchar(50)
+cltphone varchar(50)
+cltmarry varchar(50)
+
+pyID int
+pyCLTID int
+pyPAYERID varchar(50)
+pyPAYERTYPE varchar(50)
+pySUBSID varchar(50)
+pyGROUP varchar(50)
+pyAUTH varchar(50)
+pySTART date
+pyEND date
+pysame bit
+pyfirst varchar(50)
+pylast varchar(50)
+pyPhone varchar(50)
+pyDOB datetime
+pyadd varchar(50)
+pycity varchar(50)
+pystate varchar(10)
+pyzip varchar(10)
+
+SERVICES
+Objects: tbldartssrv, tblservices
+Parameters: cltid int, StartDT date, EndDt Date
+Desc: Return data from table with below fields. If cltid is null then return all clients with services in the date range, if cltid is specified, return records for that client within the data range only.
+Join tblservices on dstxtsrv=sservice
+Dsclt=cltid …only dsdtstart must be in the range.
+
+dsID int
+dsClt int
+dsTxtSrv nvarchar(100)
+dsDtStart datetime
+dsDtEnd datetime
+dsTxtType nvarchar(50)
+dsdblUnits float
+dsDtAdded datetime
+dstxtStaff nvarchar(100)
+dstxtNote ntext
+scptCODE varchar(50)
+
+Doses
+Objects: tbldose
+Parameters: cltid int, StartDT date, EndDt Date
+Desc: Return data from table with below fields. If cltid is null then return all clients with doses in the date range, if cltid is specified, return records for that client within the data range only.
+Dtmeddate should be used for startdt – enddate compare
+DoseID bigint
+CltID int
+dtDate datetime
+dtMedDate datetime
+Dose int
+strUser varchar(50)
+bottletype varchar(50)
+ordernum int
+dtVoid bit
+PPStaff varchar(50)
+
+Toxicology Header and Toxicology Detail
+Objects: tbluaresult, tbluaresultdetail
+Parameters: cltid int, StartDT date, EndDt Date
+Desc: Return data from header table with below fields. If cltid is null then return all clients with results in the date range, if cltid is specified, return records for that client within the data range only.
+Join tbluaresult.uarid = tbluaresultdetail.uardrecid
+A second date set will be returned with all associated detail records from whatever header records are returned.
+HEADER
+uarID int
+uarLngCltID int
+uarSchedID int
+uarDropDt datetime
+uarResultDt datetime
+uarCreatedBy nvarchar(100)
+uarCreatedDt datetime
+
+Detail
+uardID int
+uardRecID int
+uardResult varchar(100)
+uardRX bit
+uaDetail varchar(50) 
